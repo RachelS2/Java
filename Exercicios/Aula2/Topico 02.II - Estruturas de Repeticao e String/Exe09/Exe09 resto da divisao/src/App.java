@@ -26,7 +26,7 @@ public class App {
             else if (resultado > x)
             {
                 stop = true;
-                System.out.print("A divisão de " + x + " por " + y + " vale " + (aux-1) + " e tem resto " + ((x/y) - (aux)));
+                System.out.print("A divisão de " + x + " por " + y + " vale " + (aux-1) + " e tem resto " + ( x - (y * (aux-1) )));
                 break;
             }
 
