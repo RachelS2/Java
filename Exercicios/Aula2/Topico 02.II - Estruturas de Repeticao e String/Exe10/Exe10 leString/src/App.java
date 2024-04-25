@@ -7,9 +7,16 @@ public class App {
         String texto = input.next();
         int ponto = texto.indexOf(".", 0);
 
-        var numeroStr = texto.substring(ponto+1);
-        if (numeroStr.valueOf
+        String numeroStr = texto.substring(ponto+1);        
 
+        try {
+                int numero = Integer.parseInt(numeroStr);
+                System.out.println("O número após o ponto é um número real: " + numero);
+            } 
+        catch (NumberFormatException e) 
+            {
+                System.out.println("O character após o ponto não é um número real.");
+            }
 
         input.close();
     }
