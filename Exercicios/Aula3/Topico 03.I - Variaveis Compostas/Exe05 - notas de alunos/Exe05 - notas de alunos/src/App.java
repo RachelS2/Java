@@ -24,7 +24,7 @@ public class App {
                     float n = input.nextFloat();
                     soma += n;
                 }
-                float media = soma/3;
+                Float media = soma/3;
                 alunos_medias[linha][1] = String.valueOf(media);
                 linha++;
             }
@@ -38,6 +38,20 @@ public class App {
             if (alunos_medias[line][0] != null && alunos_medias[line][0].equals(nome)) 
                 System.out.println(alunos_medias[line][1]);
         }
+
+        System.out.print("\n Insira uma nota e veja quais alunos têm a média acima dela: ");
+        float media = input.nextFloat();
+
+        for (int line = 0; line < 15; line ++) 
+        {
+            if (alunos_medias[line][1] != null) 
+            {
+                Float nota = Float.valueOf(alunos_medias[line][1]);
+                if (nota > media)
+                    System.out.println("\n" + alunos_medias[line][0]);
+            }
+        }
+
         input.close();
     }
 }
