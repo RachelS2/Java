@@ -13,14 +13,17 @@ public class App {
             if (num < 50)
                 System.out.print("O número " + num + " em numerologia romana é: " + zero_A_49[num-1]);
 
-            else if (num >= 50 & num < 100) 
+            else if (num == 50)
+                System.out.print("O número 50 em numerologia romana é: L");
+
+            else if (num > 50 & num < 100) 
             {
                 System.out.print("O número " + num + " em numerologia romana é: L" + zero_A_49[num-51] );
             }
 
             else if (num >= 100 & num < 500) 
             {
-                
+
             }
 
         }
