@@ -2,11 +2,19 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) throws Exception 
     {
-       int[] vetorOrdenado = InsertionSort();
-        System.out.println("\nVetor ordenado por Inserction Sort:");
+        System.out.println("\nVetor ordenado por Insertion Sort:");
+        PercorreVetor(InsertionSort());
+        
+        System.out.println("\nVetor ordenado por Selection Sort:");
+        PercorreVetor(SelectionSort());  
+        
+    }
+
+    public static void PercorreVetor(int[] vetor)
+    {
         for (int i = 0; i < 10; i++) {
-            System.out.print(vetorOrdenado[i] + " ");
-        }    
+            System.out.print(vetor[i] + " ");
+        } 
     }
 
     public static int[] InsertionSort()
@@ -29,5 +37,35 @@ public class App {
         return vetor;
     }
 
+    public static int[] SelectionSort()
+    {
+        int[] vetor = new int[10];
+        Scanner input = new Scanner(System.in);
 
+        //LISTA DESORDENADA
+        for (int i = 0; i < 10; i++) {
+            System.out.print("Insira um número: ");
+            vetor[i] = input.nextInt();
+        }
+        //LISTA ORDENADA
+        int min = 0;
+        for (int i = 0; i < 10; i++) {
+            if (i == 0) 
+                min = vetor[i];
+            else
+            {
+                if (vetor[i] < min){
+                    min = vetor[i];
+                    vetor[0] = min;
+                }
+                    
+                else if (vetor[i] < vetor[i-1]) {
+                    vetor[i-1] = vetor[i];
+                    vetor[i] = vetor[i-1];
+                }
+            }
+        }
+        input.close();
+        return vetor;
+    }
 }
