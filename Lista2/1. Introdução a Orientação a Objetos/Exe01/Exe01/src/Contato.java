@@ -8,16 +8,17 @@ public class Contato
 {
     Map<String, List<String>> Contatos;
     Scanner input = new Scanner(System.in);
+    static Contato Contato;
 
-    public void MapInitializer()
+    public void MapInitializer(Contato contato)
     {
+        Contato = contato;
         Contatos = new HashMap<>();
     }
 
-    public void Options()
+    public static void Options()
     {
-        Agenda opcoes = new Agenda();
-        opcoes.Options();
+        Agenda.Options(Contato);
     }
 
     public void Inserct()
@@ -29,10 +30,12 @@ public class Contato
         
         if (Contatos.containsKey(name))
         {
-            System.out.println("Esse contato já existe. Deseja atualizá-lo? (S/N)");
+            System.out.println("Esse contato já existe. Deseja atualizá-lo? (SIM/NAO)");
             String answer = input.nextLine();
-            if (answer.equalsIgnoreCase("S"))
+            if (answer.equalsIgnoreCase("SIM"))
+            {
                 Update();
+            }
             else
                 Options();
         }
@@ -49,6 +52,7 @@ public class Contato
             contato.add(tel); contato.add(address);
 
             Contatos.put(name, contato);
+            Options();
         }
     }
 
@@ -99,11 +103,12 @@ public class Contato
             else if (option.equalsIgnoreCase("C"))
             {
                 System.out.print("\nANTIGO ENDEREÇO: " + dados.get(1));
-                System.out.print("NOVO ENDEREÇO: ");
+                System.out.print("\nNOVO ENDEREÇO: ");
                 String newAddress = input.nextLine();
                 dados.remove(1);
                 dados.add(1, newAddress);
             }
+            Options();
         }
     }
 
@@ -118,12 +123,40 @@ public class Contato
             System.out.println("TELEFONE: " + dados.get(0));
             System.out.println("ENDEREÇO: " + dados.get(1));
         }
-        
+        Options();
+    }
+
+    public void ShowAll()
+    {
+        System.out.println("\n[4] EXIBINDO TODOS OS CONTATOS");
+        for (Map.Entry<String, List<String>> entrada : Contatos.entrySet()) 
+        {
+            List<String> dados = entrada.getValue();
+            System.out.println("NOME: " + entrada.getKey());
+            System.out.println("TELEFONE: " + dados.get(0));
+            System.out.println("ENDEREÇO: " + dados.get(1));
+            System.out.print("\n");
+        }
+        Options();
     }
     
     public void Delete()
     {
+        System.out.println("\n[5] APAGANDO UM CONTATO");
+        System.out.print("NOME: ");
+        String name = input.nextLine();
+        if (Contatos.containsKey(name))
+            Contatos.remove(name);
         
+        else 
+            System.out.println("\nEsse contato não existe.");
+        
+        Options();
     }
 
+    public void Finish()
+    {
+        System.out.println("\n[6] ENCERRANDO O PROGRAMA");
+        System.out.print("Fechando a agenda...");
+    }
 }
