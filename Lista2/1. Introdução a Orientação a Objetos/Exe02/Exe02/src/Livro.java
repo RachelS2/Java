@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Livro 
 {
-    Map<String, HashMap<String, Integer>> Estoque;
+    private Map<String, HashMap<String, Integer>> Estoque;
     
     public void StockInitializer() 
     {
@@ -75,14 +75,42 @@ public class Livro
 
     public void RunMap (String categoryName) 
     {
-        System.out.println("\n-> Livros ofertados: ");
+        System.out.println("\n-> Livros ofertados e total em estoque: ");
         HashMap<String, Integer> totalBooks = Estoque.get(categoryName);
         int option = 1;
         for (Map.Entry<String, Integer> total : totalBooks.entrySet())
         {
-            System.out.println("\n[" + option + "] " + total.getKey());
+            System.out.println("\n[" + option + "] " + total.getKey() + "\n- Total em estoque: " + total.getValue());
             option++;
         }
+        System.out.println("\n-> Selecione o livro desejado com base em seu número: ");
+        Scanner input = new Scanner(System.in);
+        int choice = input.nextInt();
+        option = 1;
+        for (Map.Entry<String, Integer> total : totalBooks.entrySet())
+        {
+            if (option == choice) 
+            {
+                if (total.getValue() > 0)
+                {
+                    totalBooks.replace(total.getKey(), total.getValue(), total.getValue() - 1);
+                    Emprestimo e = new Emprestimo();
+                }
+
+                else 
+                {
+                    System.out.println("Esse livro não está disponível no momento.");
+                    CallOptions();
+                }
+            }
+            option++;
+        }
+        input.close();
+    }
+
+    public static void CallOptions()
+    {
+        Program.Options();
     }
 
     public void Fiction() 
@@ -114,6 +142,4 @@ public class Livro
         System.out.println("\n----------------- AUTO-AJUDA -----------------");
         RunMap("AutoAjuda");
     }
-}
-
 }

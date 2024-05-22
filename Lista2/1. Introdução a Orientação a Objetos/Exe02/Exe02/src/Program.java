@@ -15,7 +15,8 @@ public class Program
         {
             Book = new Livro();
             Book.StockInitializer();
-            Options();
+            Pessoa person = new Pessoa();
+            person.Cadastro();
         }
         Input.close();
     }
