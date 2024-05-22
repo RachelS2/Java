@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.*;
+import java.util.List;
 
 public class Program
 {
@@ -16,12 +18,13 @@ public class Program
             Book = new Livro();
             Book.StockInitializer();
             Pessoa person = new Pessoa();
-            person.Cadastro();
+            person.PeopleInitializer();
+            person.Log();
         }
         Input.close();
     }
 
-    public static void Options()
+    public static void Options(Map<Integer, List<String>> People)
     {
         System.out.println("\nCategorias disponíveis: ");
         System.out.println("[1] ROMANCE ");
@@ -32,6 +35,8 @@ public class Program
         System.out.println("[6] AUTO-AJUDA ");
         System.out.println("\nSelecione uma categoria com base em seu número. ");
         int category = Input.nextInt();
+        Livro.Person = People;
+        
         switch (category)
         {
             case 1:
@@ -58,7 +63,8 @@ public class Program
                 Book.SelfHelp();
                 break;
             default:
-                System.out.print("Opção inválida. Reinicie o programa e tente novamente.");
+                System.out.print("Opção inválida");
+                Options(People);
         }
     }
 }

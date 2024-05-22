@@ -4,6 +4,7 @@ import java.util.List;
 public class Livro 
 {
     private Map<String, HashMap<String, Integer>> Estoque;
+    static Map<Integer, List<String>> Person;
     
     public void StockInitializer() 
     {
@@ -94,7 +95,8 @@ public class Livro
                 if (total.getValue() > 0)
                 {
                     totalBooks.replace(total.getKey(), total.getValue(), total.getValue() - 1);
-                    Emprestimo e = new Emprestimo();
+                    Emprestimo loan = new Emprestimo();
+                    loan.Data(total.getKey(), Person);
                 }
 
                 else 
@@ -110,7 +112,7 @@ public class Livro
 
     public static void CallOptions()
     {
-        Program.Options();
+        Program.Options(Person);
     }
 
     public void Fiction() 
