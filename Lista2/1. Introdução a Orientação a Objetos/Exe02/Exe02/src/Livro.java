@@ -76,7 +76,7 @@ public class Livro
 
     public void RunMap (String categoryName) 
     {
-        System.out.println("\n-> Livros ofertados e total em estoque: ");
+        System.out.println("\n-> Livros ofertados: ");
         HashMap<String, Integer> totalBooks = Estoque.get(categoryName);
         int option = 1;
         for (Map.Entry<String, Integer> total : totalBooks.entrySet())
@@ -87,6 +87,11 @@ public class Livro
         System.out.println("\n-> Selecione o livro desejado com base em seu número: ");
         Scanner input = new Scanner(System.in);
         int choice = input.nextInt();
+        if (choice > option)
+        {
+            System.out.println("\nInsira um número válido.");
+            RunMap(categoryName);
+        }
         option = 1;
         for (Map.Entry<String, Integer> total : totalBooks.entrySet())
         {

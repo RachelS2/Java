@@ -36,7 +36,7 @@ public class Program
         System.out.println("\nSelecione uma categoria com base em seu número. ");
         int category = Input.nextInt();
         Livro.Person = People;
-        
+            
         switch (category)
         {
             case 1:
@@ -62,8 +62,9 @@ public class Program
             case 6: 
                 Book.SelfHelp();
                 break;
+            
             default:
-                System.out.print("Opção inválida");
+                System.out.print("\nOpção inválida!\n");
                 Options(People);
         }
     }
