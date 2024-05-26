@@ -1,12 +1,12 @@
 public class Triangulo extends Figura
 {
-    public Triangulo(double lado1, double lado2, double lado3) 
+    public Triangulo(double base, double altura) 
     {
-        super(lado1, lado2, lado3);
+        super(base, altura);
     }
 
     public void Area()
     {
-        System.out.println("A área é: " + Lado1 * Lado2 * Lado3);
+        System.out.println("A área é: " + (Lado1 * Lado2)/2);
     }
 } 

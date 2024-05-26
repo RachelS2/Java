@@ -24,10 +24,11 @@ public class Program {
 
         else if (figura == 3)
         {   
-            double lado1 = Print(1);
-            double lado2 = Print(2);
-            double lado3 = Print(3);
-            Figura triangulo = new Triangulo(lado1, lado2, lado3);
+            System.out.println("Insira a base do triângulo: ");
+            double base = input.nextDouble();
+            System.out.println("Insira a altura do triângulo: ");
+            double altura = input.nextDouble();
+            Figura triangulo = new Triangulo(base, altura);
             triangulo.Area();
         }
 
