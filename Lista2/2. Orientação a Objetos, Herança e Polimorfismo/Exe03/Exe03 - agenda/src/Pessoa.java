@@ -1,42 +1,46 @@
 import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Pessoa 
 {
-    Map<String, List<String>> Agenda;
+    static Map<Integer, Map<String, List<String>>> Agenda;
     
-    public void Inicio()
+    public static void Inicio()
     {
         Agenda = new HashMap<>();
     }
 
-    public void InserirPessoa()
+    public static void InserirPessoa()
     {
-        Scanner input = new Scanner(System.in);
-        System.out.println("-> NOME: ");
-        String nome = input.nextLine();
-        System.out.println("-> ENDEREÇO: ");
-        String endereco = input.nextLine();
-        System.out.println("-> ID: ");
-        String id = input.nextLine();
-        List<String> pessoa = new ArrayList<>(List.of(nome, endereco));
-        Agenda.put(id, pessoa);
-        input.close();
     }
 
-    public void ChecarAgenda(String id)
+    public static List<String> ChecarAgenda(String cnpj)
     {
-        for(Map.Entry<String, List<String>> contato : Agenda.entrySet())
+        for(Map.Entry<Integer, Map<String, List<String>>> pessoa : Agenda.entrySet())
         {
-            if (contato.getKey() == id)
-            {
-                List<String> dados = contato.getValue();
-                System.out.println("ID: " + id + "\n Nome: " + dados.get(0) + "\n Endereço: " + dados.get(1));
-            }
+            Map<String, List<String>> contato = pessoa.getValue();
+            for(Map.Entry<String, List<String>> agenda : contato.entrySet())
+                if (agenda.getKey().equals(cnpj))
+                    return agenda.getValue();   
+        }
+        return null;
+    }
+
+    public static void ImprimirAgenda()
+    {
+        System.out.println("\n~~~~~~~~~~ INFORMAÇÕES DOS CONTATOS ~~~~~~~~~~");
+        for(Map.Entry<Integer, Map<String, List<String>>> pessoa : Agenda.entrySet())
+        {
+            int tipoDePessoa = pessoa.getKey();
+            Map<String, List<String>> contato = pessoa.getValue();
+            for(Map.Entry<String, List<String>> agenda : contato.entrySet())
+                if (tipoDePessoa == 1)
+                    PessoaFisica.ImprimirCPF(agenda.getKey(), agenda.getValue());
+                
+                else
+                    PessoaJuridica.ImprimirCNPJ(agenda.getKey(), agenda.getValue());
         }
     }
-
 }
+

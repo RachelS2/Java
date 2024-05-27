@@ -2,30 +2,38 @@ import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.HashMap;
 
 public class PessoaFisica extends Pessoa
 {
 
-    public void InserirPessoa()
+    public static void InserirPessoa()
     {
         Scanner input = new Scanner(System.in);
-        System.out.println("-> NOME: ");
+        System.out.println("\n-> NOME: ");
         String nome = input.nextLine();
-        System.out.println("-> ENDEREÇO: ");
+        System.out.println("\n-> ENDEREÇO: ");
         String endereco = input.nextLine();
-        System.out.println("-> CPF: ");
+        System.out.println("\n-> CPF: ");
         String cpf = input.nextLine();
-        List<String> pessoa = new ArrayList<>(List.of(nome, endereco));
-        Agenda.put(cpf, pessoa);
+        System.out.println("\n-> Data de aniversário (DD/MM/YYYY): ");
+        String aniversario = input.nextLine();
+        List<String> pessoa = new ArrayList<>(List.of(nome, endereco, aniversario));
+        
+        Map<String,List<String>> value = new HashMap<>();
+        value.put(cpf, pessoa);
+        Agenda.put(1, value);
         Opcoes(input);
     }
 
-    public void Opcoes(Scanner input)
+    public static void Opcoes(Scanner input)
     {
         System.out.println("\nVocê deseja...");
-        System.out.println("\n[1] Inserir mais uma pessoa na agenda");
-        System.out.println("\n[2] Voltar ao menu principal");
-        System.out.println("\n[3] Encerrar o programa");
+        System.out.println("[1] Inserir mais uma pessoa na agenda");
+        System.out.println("[2] Voltar ao menu principal");
+        System.out.println("[3] Verificar uma pessoa física");
+        System.out.println("[4] Verificar todas as pessoas físicas");
+        System.out.println("[5] Encerrar o programa");
 
         int opcao = input.nextInt();
         if (opcao == 1)
@@ -33,6 +41,19 @@ public class PessoaFisica extends Pessoa
         else if (opcao == 2)
             Program.MenuPrincipal();
         else if (opcao == 3)
+        {
+            System.out.print("\nInsira o CPF do contato: ");
+            String cpf = input.next();
+            List<String> contato = ChecarAgenda(cpf);
+            if (contato != null)
+                ImprimirCPF(cpf, contato);
+            
+            else {
+                System.out.println("CPF não encontrado. Tente novamente.");
+            Opcoes(input); }
+        }
+
+        else if (opcao == 5)
             System.out.println("\nEncerrando o programa...");
         else {
             System.out.println("\nOpção inválida. Tente novamente.");
@@ -41,15 +62,13 @@ public class PessoaFisica extends Pessoa
         input.close();
     }
 
-    public void ChecarAgenda(String cpf)
+    public static void ImprimirCPF(String cpf, List<String> contato)
     {
-        for(Map.Entry<String, List<String>> contato : Agenda.entrySet())
-        {
-            if (contato.getKey() == cpf)
-            {
-                List<String> dados = contato.getValue();
-                System.out.println("CPF: " + cpf + "\n Nome: " + dados.get(0) + "\n Endereço: " + dados.get(1));
-            }
-        }
+        System.out.println("\nCPF: " + cpf);
+        System.out.println("Nome: " + contato.get(0));
+        System.out.println("Endereço: " + contato.get(1));
+        System.out.println("Data de aniversário: " + contato.get(2) + "\n");
+        Scanner x = new Scanner(System.in);
+        Opcoes(x);
     }
 }
