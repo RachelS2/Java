@@ -27,20 +27,33 @@ public class Pessoa
         return null;
     }
 
-    public static void ImprimirAgenda()
+    public static void ImprimirPessoa(int tipoPessoa)
     {
         System.out.println("\n~~~~~~~~~~ INFORMAÇÕES DOS CONTATOS ~~~~~~~~~~");
-        for(Map.Entry<Integer, Map<String, List<String>>> pessoa : Agenda.entrySet())
-        {
-            int tipoDePessoa = pessoa.getKey();
-            Map<String, List<String>> contato = pessoa.getValue();
-            for(Map.Entry<String, List<String>> agenda : contato.entrySet())
-                if (tipoDePessoa == 1)
-                    PessoaFisica.ImprimirCPF(agenda.getKey(), agenda.getValue());
+        Map<String, List<String>> pessoa = Agenda.get(tipoPessoa); 
+        
+        for(Map.Entry<String, List<String>> agenda : pessoa.entrySet())
+            if (tipoPessoa == 1)
+                PessoaFisica.ImprimirCPF(agenda.getKey(), agenda.getValue());
                 
-                else
-                    PessoaJuridica.ImprimirCNPJ(agenda.getKey(), agenda.getValue());
-        }
+            else if (tipoPessoa == 2)
+                PessoaJuridica.ImprimirCNPJ(agenda.getKey(), agenda.getValue());
+             
+    }
+
+     public static void ImprimirAgenda(int tipoPessoa)
+    {
+        System.out.println("\n~~~~~~~~~~ INFORMAÇÕES DOS CONTATOS ~~~~~~~~~~");
+        Map<String, List<String>> pessoa = Agenda.get(tipoPessoa); 
+        
+        for(Map.Entry<String, List<String>> agenda : pessoa.entrySet())
+            if (tipoPessoa == 1)
+                PessoaFisica.ImprimirCPF(agenda.getKey(), agenda.getValue());
+                
+            else if (tipoPessoa == 2)
+                PessoaJuridica.ImprimirCNPJ(agenda.getKey(), agenda.getValue());
+            
+            else 
     }
 }
 
