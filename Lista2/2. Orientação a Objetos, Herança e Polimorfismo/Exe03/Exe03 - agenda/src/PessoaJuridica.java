@@ -54,8 +54,6 @@ public class PessoaJuridica extends Pessoa
                 List<String> contato = ChecarAgenda(cnpj);
                 if (contato != null)
                     ImprimirCNPJ(contato);
-                else 
-                    System.out.println("CNPJ não encontrado. Tente novamente.");
                 break;
             
             case 4: 

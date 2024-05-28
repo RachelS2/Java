@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class PessoaFisica extends Pessoa
 {
-
     static List<List<String>> PessoaFisica;
     
     public static void IniciaLista()
@@ -54,9 +53,6 @@ public class PessoaFisica extends Pessoa
                 List<String> contato = ChecarAgenda(cpf);
                 if (contato != null)
                     ImprimirCPF(contato);
-                
-                else 
-                    System.out.println("CPF não encontrado. Tente novamente."); 
                 break;
 
             case 4: 

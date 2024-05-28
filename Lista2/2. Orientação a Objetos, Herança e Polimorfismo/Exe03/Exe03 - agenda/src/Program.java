@@ -5,6 +5,7 @@ public class Program
 {
     public static void main(String[] args) 
     {
+        Pessoa.IniciaAgenda();
         PessoaFisica.IniciaLista();
         PessoaJuridica.IniciaLista();
         MenuPrincipal();
@@ -22,7 +23,6 @@ public class Program
 
         Scanner input = new Scanner(System.in);
         int numero = input.nextInt();
-        Pessoa.Inicio();
 
         if (numero == 1)
             PessoaFisica.InserirPessoa();

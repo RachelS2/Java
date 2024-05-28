@@ -6,7 +6,7 @@ public class Pessoa
 {
     static Map<Integer, List<List<String>>> Agenda;
     
-    public static void Inicio()
+    public static void IniciaAgenda()
     {
         Agenda = new HashMap<>();
     }
@@ -25,8 +25,9 @@ public class Pessoa
                         return dados;   
                 }
             }
-            return null;
+            System.out.println("CNPJ não encontrado. Tente novamente.");
         }
+        System.out.println("Agenda não inicializada. Tente novamente.");
         return null;
     }
 
@@ -51,7 +52,11 @@ public class Pessoa
         {
             System.out.println("\n~~~~~~~~~~ INFORMAÇÕES DOS CONTATOS ~~~~~~~~~~");
             for(int pessoa = 1; pessoa < 3; pessoa++)
-                ImprimirPessoa(pessoa);
+            {
+                List<List<String>> dados = Agenda.get(pessoa); 
+                if (dados != null && dados.size() > 0)
+                    ImprimirPessoa(pessoa);
+            }
         }
         else 
         {
