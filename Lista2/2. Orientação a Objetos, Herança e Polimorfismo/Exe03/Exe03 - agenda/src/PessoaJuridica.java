@@ -31,7 +31,7 @@ public class PessoaJuridica extends Pessoa
     public static void Opcoes(Scanner input)
     {
         System.out.println("\nVocê deseja...");
-        System.out.println("[1] Inserir mais uma pessoa na agenda");
+        System.out.println("[1] Inserir mais uma pessoa jurídica na agenda");
         System.out.println("[2] Voltar ao menu principal");
         System.out.println("[3] Verificar uma pessoa jurídica");
         System.out.println("[4] Verificar todas as pessoas jurídicas");
