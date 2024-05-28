@@ -60,7 +60,7 @@ public class Pessoa
         }
         else 
         {
-            System.out.print("\nA agenda ainda não foi inicializada. Tente novamente.\n"); 
+            System.out.print("\nNenhuma pessoa cadastrada no sistema. Tente novamente.\n"); 
             Program.MenuPrincipal();    
         }
     }
