@@ -1,9 +1,12 @@
 import java.util.Scanner;
+import java.util.List;
 
 public class Program 
 {
     public static void main(String[] args) 
     {
+        PessoaFisica.IniciaLista();
+        PessoaJuridica.IniciaLista();
         MenuPrincipal();
     }
 
@@ -22,24 +25,14 @@ public class Program
         Pessoa.Inicio();
 
         if (numero == 1)
-        {
-            PessoaFisica pessoaFisica = new PessoaFisica();
-            pessoaFisica.InserirPessoa();
-        }
-
+            PessoaFisica.InserirPessoa();
+        
         else if (numero == 2)
-        {
-            PessoaJuridica pessoaJuri = new PessoaJuridica();
-            pessoaJuri.InserirPessoa();
-        }
-
+            PessoaJuridica.InserirPessoa();
+        
         else if (numero == 3) 
-        {
-            System.out.println("Insira o CPF ou CNPJ da pessoa: ");
-            String id = input.nextLine();
-            Pessoa.ChecarAgenda(id);
-        }
-
+            AcessarContato(input);
+                        
         else if (numero == 4) 
             Pessoa.ImprimirAgenda();
         
@@ -49,5 +42,29 @@ public class Program
             MenuPrincipal();
         }
         input.close();
+    }
+
+    public static void AcessarContato(Scanner input)
+    {
+        System.out.println("\nO contato é uma pessoa: ");
+        System.out.println("[1] FÍSICA");
+        System.out.println("[2] JURÍDICA");
+        int pessoa = input.nextInt();
+        System.out.println("");
+        System.out.print("Insira o CPF ou o CNPJ da pessoa: ");
+        String id = input.next();
+        List<String> contato = Pessoa.ChecarAgenda(id);
+        if (contato == null)
+        {
+            System.out.println("Pessoa não cadastrada no sistema.");
+            MenuPrincipal();
+        }
+        else 
+        {
+            if (pessoa == 1)
+                Pessoa.ImprimirPessoa(1);
+            else if (pessoa == 2) 
+                Pessoa.ImprimirPessoa(2);
+        }
     }
 }

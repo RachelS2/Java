@@ -4,56 +4,60 @@ import java.util.HashMap;
 
 public class Pessoa 
 {
-    static Map<Integer, Map<String, List<String>>> Agenda;
+    static Map<Integer, List<List<String>>> Agenda;
     
     public static void Inicio()
     {
         Agenda = new HashMap<>();
     }
 
-    public static void InserirPessoa()
-    {
-    }
-
     public static List<String> ChecarAgenda(String cnpj)
     {
-        for(Map.Entry<Integer, Map<String, List<String>>> pessoa : Agenda.entrySet())
+        if (Agenda.size() > 0) 
         {
-            Map<String, List<String>> contato = pessoa.getValue();
-            for(Map.Entry<String, List<String>> agenda : contato.entrySet())
-                if (agenda.getKey().equals(cnpj))
-                    return agenda.getValue();   
+            for(Map.Entry<Integer, List<List<String>>> todoMundo : Agenda.entrySet())
+            {
+                List<List<String>> pessoaFouJ = todoMundo.getValue();
+                for(int i = 0; i < pessoaFouJ.size(); i++)
+                {
+                    List<String> dados = pessoaFouJ.get(i);
+                    if (dados.get(0).equals(cnpj))
+                        return dados;   
+                }
+            }
+            return null;
         }
         return null;
     }
 
     public static void ImprimirPessoa(int tipoPessoa)
     {
-        System.out.println("\n~~~~~~~~~~ INFORMAÇÕES DOS CONTATOS ~~~~~~~~~~");
-        Map<String, List<String>> pessoa = Agenda.get(tipoPessoa); 
+        List<List<String>> pessoa = Agenda.get(tipoPessoa); 
         
-        for(Map.Entry<String, List<String>> agenda : pessoa.entrySet())
+        for(int i = 0; i < pessoa.size(); i++)
+        {
+            List<String> dados = pessoa.get(i);
             if (tipoPessoa == 1)
-                PessoaFisica.ImprimirCPF(agenda.getKey(), agenda.getValue());
+                PessoaFisica.ImprimirCPF(dados);
                 
             else if (tipoPessoa == 2)
-                PessoaJuridica.ImprimirCNPJ(agenda.getKey(), agenda.getValue());
-             
+                PessoaJuridica.ImprimirCNPJ(dados);
+        }
     }
 
-     public static void ImprimirAgenda(int tipoPessoa)
+     public static void ImprimirAgenda()
     {
-        System.out.println("\n~~~~~~~~~~ INFORMAÇÕES DOS CONTATOS ~~~~~~~~~~");
-        Map<String, List<String>> pessoa = Agenda.get(tipoPessoa); 
-        
-        for(Map.Entry<String, List<String>> agenda : pessoa.entrySet())
-            if (tipoPessoa == 1)
-                PessoaFisica.ImprimirCPF(agenda.getKey(), agenda.getValue());
-                
-            else if (tipoPessoa == 2)
-                PessoaJuridica.ImprimirCNPJ(agenda.getKey(), agenda.getValue());
-            
-            else 
+        if (Agenda.size() > 0)
+        {
+            System.out.println("\n~~~~~~~~~~ INFORMAÇÕES DOS CONTATOS ~~~~~~~~~~");
+            for(int pessoa = 1; pessoa < 3; pessoa++)
+                ImprimirPessoa(pessoa);
+        }
+        else 
+        {
+            System.out.print("\nA agenda ainda não foi inicializada. Tente novamente.\n"); 
+            Program.MenuPrincipal();    
+        }
     }
 }
 
