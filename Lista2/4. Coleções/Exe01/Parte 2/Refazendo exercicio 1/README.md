@@ -6,3 +6,5 @@ usando List no lugar de vetor.
 1. Faça um programa de agenda telefônica, com as seguintes classes:
 • Agenda
 • Contato
+
+-> O exercicio 1 ja havia sido feito utilizando Listas
