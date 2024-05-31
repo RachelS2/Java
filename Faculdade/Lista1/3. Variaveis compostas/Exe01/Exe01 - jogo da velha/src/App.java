@@ -31,7 +31,7 @@ public class App {
     public static void IniciaJogo(){
         System.out.println("\nUsuário: X\nComputador: O\n");
         for (int linha = 0; linha < 3; linha++) {
-            System.out.print(" __________|___________|_________\n");
+            System.out.print(Tabuleiro.toString());
         }
     }
 
@@ -50,7 +50,7 @@ public class App {
         int column = input.nextInt();
         if (column > 3 || column < 1)
         {
-            System.out.println("A coluna deve ser um valor de 1 à 3.");
+            System.out.println("A coluna deve ser um valor de 1 à 3."); 
             JogadaUsuario(linha, coluna);
         }
 
@@ -59,7 +59,7 @@ public class App {
 
         if (posicaoOcupada == false){
             System.out.print("Marcando X na posição: (" + line + ", " + column + "):\n" );
-            MudaTabuleiro(line, column);
+            MudaTabuleiro(line, column, 'X');
             System.out.print("\n~~~~~~~ JOGADA DO ROBÔ ~~~~~~~~\n ");
             JogadaRobo();
         }
@@ -71,21 +71,24 @@ public class App {
         input.close();
     }
 
-     public static void MudaTabuleiro(int line, int column){
+     public static void MudaTabuleiro(int line, int column, char figura){
         StringBuilder sb = new StringBuilder();
         System.out.print("\n");
         for (int linha = 1; linha < 4; linha++) {
-            String tabuleiro =  "__________|__________|__________\n";
-            sb = new StringBuilder(tabuleiro);
-            if (linha != line)
-                System.out.print(Tabuleiro);
-
-            if(Tabuleiro.charAt(5) != '-' || Tabuleiro.charAt(16) != '-' || Tabuleiro.charAt(27) != '-')
+            // if(!(Tabuleiro.equals('-' )))
+            //     continue;
+            
+            // else{
+                String tabuleiro =  "__________|__________|__________\n";
+                sb = new StringBuilder(tabuleiro);
+                if (linha != line)
+                    System.out.print(tabuleiro);
+            
 
             for (int coluna = 1; coluna < 4; coluna++) {
                 if (linha == line && coluna == column) 
                 {
-                    sb.setCharAt(Espacamento(sb, coluna), 'X');
+                    sb.setCharAt(Espacamento(sb, coluna), figura);
                     System.out.print(sb);
                 }
             }
@@ -104,7 +107,7 @@ public class App {
             JogadaRobo();
         else
         {
-            MudaTabuleiro(linha, coluna);
+            MudaTabuleiro(linha, coluna, 'O');
             JogadaUsuario(linha, coluna);
         }
     }
