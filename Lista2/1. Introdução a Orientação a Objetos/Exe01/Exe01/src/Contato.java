@@ -1,8 +1,4 @@
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Contato
 {
@@ -48,8 +44,7 @@ public class Contato
             System.out.print("ENDEREÇO: ");
             String address = input.nextLine();
 
-            ArrayList<String> contato = new ArrayList();
-            contato.add(tel); contato.add(address);
+            List<String> contato = Arrays.asList(tel, address);
 
             Contatos.put(name, contato);
             Options();
@@ -96,8 +91,7 @@ public class Contato
                 System.out.print("\nANTIGO TELEFONE: " + dados.get(0));
                 System.out.print("\nNOVO TELEFONE: ");
                 String newPhone = input.nextLine();
-                dados.remove(0);
-                dados.add(0, newPhone);
+                dados.set(0, newPhone);
             }
 
             else if (option.equalsIgnoreCase("C"))
@@ -105,9 +99,9 @@ public class Contato
                 System.out.print("\nANTIGO ENDEREÇO: " + dados.get(1));
                 System.out.print("\nNOVO ENDEREÇO: ");
                 String newAddress = input.nextLine();
-                dados.remove(1);
-                dados.add(1, newAddress);
+                dados.set(1, newAddress);
             }
+            Contatos.put(name, dados);
             Options();
         }
     }
@@ -123,20 +117,26 @@ public class Contato
             System.out.println("TELEFONE: " + dados.get(0));
             System.out.println("ENDEREÇO: " + dados.get(1));
         }
+        else System.out.println("\n Esse contato não existe.");
         Options();
     }
 
     public void ShowAll()
     {
         System.out.println("\n[4] EXIBINDO TODOS OS CONTATOS");
-        for (Map.Entry<String, List<String>> entrada : Contatos.entrySet()) 
+        if (Contatos.size() > 0)
         {
-            List<String> dados = entrada.getValue();
-            System.out.println("NOME: " + entrada.getKey());
-            System.out.println("TELEFONE: " + dados.get(0));
-            System.out.println("ENDEREÇO: " + dados.get(1));
-            System.out.print("\n");
+            for (Map.Entry<String, List<String>> entrada : Contatos.entrySet()) 
+            {
+                List<String> dados = entrada.getValue();
+                System.out.println("NOME: " + entrada.getKey());
+                System.out.println("TELEFONE: " + dados.get(0));
+                System.out.println("ENDEREÇO: " + dados.get(1));
+                System.out.print("\n");
+            }
         }
+        else System.out.println("Agenda vazia.");
+        
         Options();
     }
     
