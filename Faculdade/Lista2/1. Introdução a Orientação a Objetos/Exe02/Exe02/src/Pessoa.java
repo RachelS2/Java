@@ -71,7 +71,6 @@ public class Pessoa
     {
         while (field.isEmpty() || field.isBlank() || field == null) 
         {
-
             field = Input.nextLine();
         }
         return field;
@@ -104,15 +103,19 @@ public class Pessoa
                     break;
             }
         }
-        System.out.print("-> SENHA: ");
-        String password = Input.next();
-        if (CheckKeyAndValue(id, password) == true)         
-            CallBooks();
         else
         {
-            System.out.print("Senha incorreta. Tente novamente.");
-            Login();
+            System.out.print("-> SENHA: ");
+            String password = Input.next();
+            if (CheckKeyAndValue(id, password) == true)         
+                CallBooks();
+            else
+            {
+                System.out.print("Senha incorreta. Tente novamente.");
+                Login();
+            }
         }
+        
     }
     
     public void CallBooks() 
