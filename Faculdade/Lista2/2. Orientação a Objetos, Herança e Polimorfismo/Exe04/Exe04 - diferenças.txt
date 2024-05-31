@@ -1,0 +1,3 @@
+Abstração trata do que um objeto faz, escondendo a complexidade dos detalhes internos e apresentando apenas os aspectos necessários e relevantes.
+Encapsulamento trata de como a informação é protegida dentro de um objeto, escondendo os detalhes de implementação e protegendo o estado interno dos objetos.
+Modularidade trata de como um sistema é estruturado em partes menores e independentes, promovendo a organização do código e facilitando a manutenção.
