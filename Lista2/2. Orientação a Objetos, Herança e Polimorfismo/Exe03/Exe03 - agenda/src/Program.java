@@ -11,7 +11,7 @@ public class Program
         MenuPrincipal();
     }
 
-    public static void MenuPrincipal()
+    public static void MenuPrincipal() 
     {
         System.out.println("\n~~~~~~~~~~ MENU PRINCIPAL ~~~~~~~~~~");
         System.out.println("Insira o número equivalente ao que deseja fazer: ");
@@ -20,7 +20,6 @@ public class Program
         System.out.println("[3] Acessar um contato");
         System.out.println("[4] Acessar todos os contatos");
         System.out.println("[5] Encerrar o programa");
-
         Scanner input = new Scanner(System.in);
         int numero = input.nextInt();
 
