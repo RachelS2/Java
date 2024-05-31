@@ -27,7 +27,8 @@ public class Pessoa
             }
             System.out.println("CNPJ não encontrado. Tente novamente.");
         }
-        System.out.println("Agenda não inicializada. Tente novamente.");
+        else
+            System.out.println("Agenda não inicializada. Tente novamente.");
         return null;
     }
 
@@ -57,6 +58,7 @@ public class Pessoa
                 if (dados != null && dados.size() > 0)
                     ImprimirPessoa(pessoa);
             }
+            Program.MenuPrincipal();
         }
         else 
         {

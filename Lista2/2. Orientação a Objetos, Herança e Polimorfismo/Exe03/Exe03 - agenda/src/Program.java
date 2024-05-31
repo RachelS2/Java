@@ -19,27 +19,36 @@ public class Program
         System.out.println("[2] Cadastrar pessoa jurídica");
         System.out.println("[3] Acessar um contato");
         System.out.println("[4] Acessar todos os contatos");
-
+        System.out.println("[5] Encerrar o programa");
 
         Scanner input = new Scanner(System.in);
         int numero = input.nextInt();
 
-        if (numero == 1)
-            PessoaFisica.InserirPessoa();
-        
-        else if (numero == 2)
-            PessoaJuridica.InserirPessoa();
-        
-        else if (numero == 3) 
-            AcessarContato(input);
-                        
-        else if (numero == 4) 
-            Pessoa.ImprimirAgenda();
-        
-        else 
-        {
-            System.out.println("Opção inválida. Tente novamente.");
-            MenuPrincipal();
+        switch (numero){
+            case 1:
+                PessoaFisica.InserirPessoa();
+                break;
+                
+            case 2:
+                PessoaJuridica.InserirPessoa();
+                break;
+
+            case 3:
+                AcessarContato(input);
+                break;
+                
+            case 4: 
+                Pessoa.ImprimirAgenda();
+                break;
+
+            case 5:
+                System.out.println("Encerrando o programa...");
+                break;
+
+            default:
+                System.out.println("Opção inválida. Tente novamente.");
+                MenuPrincipal();
+                break;
         }
         input.close();
     }

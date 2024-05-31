@@ -34,7 +34,7 @@ public class PessoaJuridica extends Pessoa
         System.out.println("[1] Inserir mais uma pessoa jurídica na agenda");
         System.out.println("[2] Voltar ao menu principal");
         System.out.println("[3] Verificar uma pessoa jurídica");
-        System.out.println("[4] Verificar todas as pessoas jurídicas");
+        System.out.println("[4] Verificar todas as pessoas jurídicas cadastradas");
         System.out.println("[5] Encerrar o programa");
 
         int opcao = input.nextInt();
@@ -65,9 +65,12 @@ public class PessoaJuridica extends Pessoa
                 System.out.println("\nEncerrando o programa...");
             
             default:
-                System.out.println("\nOpção inválida. Tente novamente."); break;
+                System.out.println("\nOpção inválida. Tente novamente."); 
+                break;
         }
-            
+
+        if (opcao !=5)             
+            Opcoes(input); 
     }
 
     public static void ImprimirCNPJ(List<String> contato)
