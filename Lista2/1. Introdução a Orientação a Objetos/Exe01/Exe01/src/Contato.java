@@ -26,14 +26,18 @@ public class Contato
         
         if (Contatos.containsKey(name))
         {
-            System.out.println("Esse contato já existe. Deseja atualizá-lo? (SIM/NAO)");
+            System.out.println("Esse contato já existe. Deseja atualizá-lo? (S/N)");
             String answer = input.nextLine();
-            if (answer.equalsIgnoreCase("SIM"))
-            {
+            if (answer.equalsIgnoreCase("S") || answer.equalsIgnoreCase("SIM"))
                 Update();
-            }
-            else
+            
+            else if (answer.equalsIgnoreCase("N") || answer.equalsIgnoreCase("Não") || answer.equalsIgnoreCase("Nao"))
                 Options();
+            
+            else { 
+                System.out.println("Opção inválida. Tente novamente."); 
+                Options();
+                }
         }
 
         else
@@ -82,7 +86,7 @@ public class Contato
                 System.out.print("\nANTIGO NOME: " + name);
                 System.out.print("\nNOVO NOME: ");
                 String newName = input.nextLine();
-                Contatos.remove(name);
+                Contatos.remove(name, dados);
                 Contatos.put(newName, dados);
             }
 
@@ -92,6 +96,7 @@ public class Contato
                 System.out.print("\nNOVO TELEFONE: ");
                 String newPhone = input.nextLine();
                 dados.set(0, newPhone);
+                Contatos.put(name, dados);
             }
 
             else if (option.equalsIgnoreCase("C"))
@@ -100,8 +105,8 @@ public class Contato
                 System.out.print("\nNOVO ENDEREÇO: ");
                 String newAddress = input.nextLine();
                 dados.set(1, newAddress);
+                Contatos.put(name, dados);
             }
-            Contatos.put(name, dados);
             Options();
         }
     }
@@ -117,7 +122,7 @@ public class Contato
             System.out.println("TELEFONE: " + dados.get(0));
             System.out.println("ENDEREÇO: " + dados.get(1));
         }
-        else System.out.println("\n Esse contato não existe.");
+        else System.out.println("\nEsse contato não existe.");
         Options();
     }
 
