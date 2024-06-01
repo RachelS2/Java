@@ -1,13 +1,11 @@
 import java.util.*;
 
 public class App {
-    //static StringBuilder Tabuleiro ;
-    // static List<List<Integer>> PosicoesOcupadas;
+
     static List<String> Tabuleiro;
     static List<List<Integer>> PosicoesDesocupadas;
     public static void main(String[] args) throws Exception {
         IniciaTabuleiro();
-        // PosicoesOcupadas = new ArrayList<List<Integer>>();
         PosicoesDesocupadas = new ArrayList<List<Integer>>();
         PosicoesTabuleiro();
         IniciaJogo();
@@ -15,8 +13,6 @@ public class App {
     }
 
     public static void IniciaTabuleiro(){
-        // String tabuleiro =  "__________|__________|__________\n";
-        // Tabuleiro = new StringBuilder(tabuleiro);
         Tabuleiro = Arrays.asList("__________|__________|__________", 
         "__________|__________|__________", "__________|__________|__________");
 
@@ -41,37 +37,52 @@ public class App {
 
     public static void JogadaUsuario(int linha, int coluna)
     {
-        System.out.print("\n~~~~~~~ JOGADA DO USUÁRIO ~~~~~~~~\n ");
         Scanner input = new Scanner(System.in);
-        System.out.print("\nInsira a linha que deseja jogar (1 à 3): ");
-        int line = input.nextInt();
-        if (line > 3 || line < 1)
-        {
-            System.out.println("A linha deve ser um valor de 1 à 3.");
-            JogadaUsuario(linha, coluna);
-        }
-        System.out.print("Insira a coluna que deseja jogar (1 à 3): ");
-        int column = input.nextInt();
-        if (column > 3 || column < 1)
-        {
-            System.out.println("A coluna deve ser um valor de 1 à 3."); 
-            JogadaUsuario(linha, coluna);
-        }
+        String velhaColuna = DeuVelhaColuna();
+        String velhaLinha = DeuVelhaLinha();
 
-        List<Integer> posicoes = Arrays.asList(line, column);
-        boolean posicaoOcupada = PosicaoOcupada(posicoes);
-
-        if (posicaoOcupada == false){
-            System.out.print("Marcando X na posição: (" + line + ", " + column + "):\n" );
-            MudaTabuleiro(line, column, 'X');
-            System.out.print("\n~~~~~~~ JOGADA DO ROBÔ ~~~~~~~~\n ");
-            JogadaRobo();
-        }
+        if (velhaColuna != null && velhaLinha != null)
+            MensagemUsuario(velhaColuna, velhaLinha);
+            
         else
         {
-            System.out.println("Essa posição já está ocupada. Tente novamente.");
-            JogadaUsuario(linha, coluna);
+            if (TabuleiroCheio() == false)
+            {
+                System.out.print("\n~~~~~~~ JOGADA DO USUÁRIO ~~~~~~~~\n ");
+                System.out.print("\nInsira a linha que deseja jogar (1 à 3): ");
+                int line = input.nextInt();
+                if (line > 3 || line < 1)
+                {
+                    System.out.println("A linha deve ser um valor de 1 à 3.");
+                    JogadaUsuario(linha, coluna);
+                }
+                System.out.print("Insira a coluna que deseja jogar (1 à 3): ");
+                int column = input.nextInt();
+                if (column > 3 || column < 1)
+                {
+                    System.out.println("A coluna deve ser um valor de 1 à 3."); 
+                    JogadaUsuario(linha, coluna);
+                }
+        
+                List<Integer> posicoes = Arrays.asList(line, column);
+                boolean posicaoOcupada = PosicaoOcupada(posicoes);
+        
+                if (posicaoOcupada == false){
+                    System.out.print("Marcando X na posição: (" + line + ", " + column + "):\n" );
+                    MudaTabuleiro(line, column, 'X');
+                    System.out.print("\n~~~~~~~ JOGADA DO ROBÔ ~~~~~~~~\n ");
+                    JogadaRobo();
+                }
+                else
+                {
+                    System.out.println("\nEssa posição já está ocupada. Tente novamente.");
+                    JogadaUsuario(linha, coluna);
+                }
+            }
+            else if (TabuleiroCheio())
+                System.out.println("\nTabuleiro cheio. Jogo encerrado.");
         }
+
         input.close();
     }
 
@@ -85,8 +96,8 @@ public class App {
             for (int coluna = 1; coluna < 4; coluna++) {
                 if (linha == line && coluna == column) 
                 {
-                    Espacamento(sb, coluna, figura);
-                    System.out.println(Tabuleiro.get(coluna-1).toString());
+                    Espacamento(sb, coluna, linha, figura);
+                    System.out.println(Tabuleiro.get(linha-1).toString());
                 }
             }
         }
@@ -94,49 +105,144 @@ public class App {
 
     public static void JogadaRobo()
     { 
-        Random random = new Random();
-        int linha = random.nextInt(1, 4);
-        int coluna = random.nextInt(1, 4);
-        List<Integer> jogadas = Arrays.asList(linha, coluna);
-        boolean posicaoOcupada = PosicaoOcupada(jogadas);
-        if (posicaoOcupada == true)
-            JogadaRobo();
-        else
+        String velhaColuna = DeuVelhaColuna();
+        String velhaLinha = DeuVelhaLinha();
+        if (velhaColuna == null && velhaLinha == null) 
         {
-            MudaTabuleiro(linha, coluna, 'O');
-            JogadaUsuario(linha, coluna);
+            if (TabuleiroCheio() == false)
+            {
+                Random random = new Random();
+                int linha = random.nextInt(1, 4);
+                int coluna = random.nextInt(1, 4);
+                List<Integer> jogadas = Arrays.asList(linha, coluna);
+                boolean posicaoOcupada = PosicaoOcupada(jogadas);
+                if (posicaoOcupada == true)
+                    JogadaRobo();
+                else
+                {
+                    MudaTabuleiro(linha, coluna, 'O');
+                    JogadaUsuario(linha, coluna);
+                }
+            }
+            else 
+                System.out.println("Tabuleiro cheio. Jogo encerrado.");   
+        }
+        else
+            MensagemUsuario(velhaColuna, velhaLinha);
+    }
+
+    public static void MensagemUsuario(String velhaColuna, String velhaLinha)
+    {
+        if (velhaColuna != null)
+        {
+            if (velhaColuna.equals("X"))
+                System.out.println("\nVOCÊ VENCEU!");
+
+            else if (velhaColuna.equals("O"))
+                System.out.println("\nO ROBÔ VENCEU!");
+        }
+        if (velhaLinha != null)
+        {
+            if (velhaLinha.equals("X"))
+            System.out.println("\nVOCÊ VENCEU!");
+
+            else if (velhaLinha.equals("O"))
+            System.out.println("\nO ROBÔ VENCEU!");
         }
     }
 
     public static boolean PosicaoOcupada(List<Integer> posicoes)
     {
-        if (PosicoesDesocupadas.size() == 9)
-            return false;
-        
-        else{
-            for (int lista = 0; lista < PosicoesDesocupadas.size(); lista++)
+        for (int lista = 0; lista < PosicoesDesocupadas.size(); lista++)
+        {
+            List<Integer> posicoesDesocupadas = PosicoesDesocupadas.get(lista);
+            if (posicoesDesocupadas.equals(posicoes))
             {
-                List<Integer> posicoesDesocupadas = PosicoesDesocupadas.get(lista);
-                if (posicoesDesocupadas == posicoes){
-                    PosicoesDesocupadas.remove(posicoes);
-                    return false;
-                }                
-            }
+                PosicoesDesocupadas.remove(posicoes);
+                return false;
+            }                
         }
         return true;
     }
 
-    public static void Espacamento(StringBuilder sb, int coluna, char figura)
+    public static boolean TabuleiroCheio()
     {
-        if (coluna == 1){
-            sb.setCharAt(5, figura);
-        }
-        else if (coluna == 2)
-            sb.setCharAt(16, figura);
-        
-        else if (coluna == 3)
-            sb.setCharAt(27, figura);
+        if (Tabuleiro.size() == 0)
+            return true;
+        return false;
+    }
 
-        Tabuleiro.set(coluna-1, sb.toString());
+    public static void Espacamento(StringBuilder sb, int coluna, int linha, char figura)
+    {
+        int index = 0;
+        if (coluna == 1){
+            index = 6;
+            sb.setCharAt(index, figura);
+        }
+            
+        else if (coluna == 2){
+            index = 16;
+            sb.setCharAt(index, figura);
+        }
+        
+        else if (coluna == 3){
+            index = 26;
+            sb.setCharAt(index, figura);
+        }
+            
+        Tabuleiro.set(linha-1, sb.toString());
+    }
+
+    public static String DeuVelhaLinha() //verifica se deu velha na horizontal (em alguma linha)
+    {
+        List<Character> figuraX = new ArrayList<>();
+        List<Character> figuraO = new ArrayList<>();
+        for (int linha = 0; linha < Tabuleiro.size(); linha++){
+            String linhaTabuleiro = Tabuleiro.get(linha);
+            for (int caracter = 6; caracter < 27; caracter += 10)
+            {
+                char figura = linhaTabuleiro.charAt(caracter);
+                if (figura == 'X')
+                    figuraX.add(figura);
+
+                else if (figura == 'O')
+                    figuraO.add(figura);
+                
+                if (figuraX.size() == 3)
+                    return "X";            
+                
+                else if (figuraO.size() == 3)
+                    return "O";
+            }
+            figuraO.clear(); figuraX.clear();
+        }
+        return null;
+    }
+
+    public static String DeuVelhaColuna() //verifica se deu velha na vertical (em alguma coluna)
+    {
+        List<Character> figuraX = new ArrayList<>();
+        List<Character> figuraO = new ArrayList<>();
+        for (int posicao = 6; posicao < 26; posicao += 10)
+        {
+            for (int coluna = 0; coluna < 3; coluna++)
+            {
+                String linhaTabuleiro = Tabuleiro.get(coluna);
+                char figura = linhaTabuleiro.charAt(posicao);
+                if (figura == 'X')
+                    figuraX.add(figura);
+
+                else if (figura == 'O')
+                    figuraO.add(figura);
+            }
+            if (figuraX.size() == 3)
+                return "X";            
+    
+            if (figuraO.size() == 3)
+                return "O";
+
+            figuraX.clear(); figuraO.clear();
+        }
+        return null;
     }
 }
