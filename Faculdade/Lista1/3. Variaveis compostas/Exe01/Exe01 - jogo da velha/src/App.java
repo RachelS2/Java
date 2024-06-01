@@ -1,8 +1,9 @@
 import java.util.*;
 
 public class App {
-    static StringBuilder Tabuleiro ;
+    //static StringBuilder Tabuleiro ;
     // static List<List<Integer>> PosicoesOcupadas;
+    static List<String> Tabuleiro;
     static List<List<Integer>> PosicoesDesocupadas;
     public static void main(String[] args) throws Exception {
         IniciaTabuleiro();
@@ -14,8 +15,11 @@ public class App {
     }
 
     public static void IniciaTabuleiro(){
-        String tabuleiro =  "__________|__________|__________\n";
-        Tabuleiro = new StringBuilder(tabuleiro);
+        // String tabuleiro =  "__________|__________|__________\n";
+        // Tabuleiro = new StringBuilder(tabuleiro);
+        Tabuleiro = Arrays.asList("__________|__________|__________", 
+        "__________|__________|__________", "__________|__________|__________");
+
     }
 
     public static void PosicoesTabuleiro(){
@@ -29,9 +33,9 @@ public class App {
     }
 
     public static void IniciaJogo(){
-        System.out.println("\nUsuário: X\nComputador: O\n");
+        System.out.println("\nUsuário: X\nRobô: O\n");
         for (int linha = 0; linha < 3; linha++) {
-            System.out.print(Tabuleiro.toString());
+            System.out.println(Tabuleiro.get(linha).toString());
         }
     }
 
@@ -72,28 +76,20 @@ public class App {
     }
 
      public static void MudaTabuleiro(int line, int column, char figura){
-        StringBuilder sb = new StringBuilder();
         System.out.print("\n");
         for (int linha = 1; linha < 4; linha++) {
-            // if(!(Tabuleiro.equals('-' )))
-            //     continue;
-            
-            // else{
-                String tabuleiro =  "__________|__________|__________\n";
-                sb = new StringBuilder(tabuleiro);
-                if (linha != line)
-                    System.out.print(tabuleiro);
-            
-
+            String tabuleiro =  Tabuleiro.get(linha-1);
+            StringBuilder sb = new StringBuilder(tabuleiro);
+            if (linha != line)
+                System.out.println(tabuleiro);
             for (int coluna = 1; coluna < 4; coluna++) {
                 if (linha == line && coluna == column) 
                 {
-                    sb.setCharAt(Espacamento(sb, coluna), figura);
-                    System.out.print(sb);
+                    Espacamento(sb, coluna, figura);
+                    System.out.println(Tabuleiro.get(coluna-1).toString());
                 }
             }
         }
-        Tabuleiro = sb;
     }
 
     public static void JogadaRobo()
@@ -130,16 +126,17 @@ public class App {
         return true;
     }
 
-    public static int Espacamento(StringBuilder sb, int coluna)
+    public static void Espacamento(StringBuilder sb, int coluna, char figura)
     {
         if (coluna == 1){
-            return 5;
+            sb.setCharAt(5, figura);
         }
         else if (coluna == 2)
-            return 16;
+            sb.setCharAt(16, figura);
         
         else if (coluna == 3)
-            return 27;
-        return 0;
+            sb.setCharAt(27, figura);
+
+        Tabuleiro.set(coluna-1, sb.toString());
     }
 }
