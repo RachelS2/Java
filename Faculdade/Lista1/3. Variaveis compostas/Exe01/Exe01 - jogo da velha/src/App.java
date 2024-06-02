@@ -43,9 +43,10 @@ public class App {
         String velhaColuna = DeuVelhaColuna();
         String velhaLinha = DeuVelhaLinha();
         String velhaDiag = DeuVelhaDiagonal();
+        String velhaDiag2 = DeuVelhaDiagonal2();
 
-        if (velhaColuna != null | velhaLinha != null | velhaDiag != null)
-            MensagemUsuario(velhaColuna, velhaLinha, velhaDiag);
+        if (velhaColuna != null | velhaLinha != null | velhaDiag != null | velhaDiag2 != null)
+            MensagemUsuario(velhaColuna, velhaLinha, velhaDiag, velhaDiag2);
             
         else
         {
@@ -79,7 +80,7 @@ public class App {
                         JogadaRobo();
                     }
                     else 
-                        MensagemUsuario(DeuVelhaColuna(), DeuVelhaLinha(), DeuVelhaDiagonal());
+                        MensagemUsuario(DeuVelhaColuna(), DeuVelhaLinha(), DeuVelhaDiagonal(), DeuVelhaDiagonal2());
                 }
                 else
                 {
@@ -120,7 +121,8 @@ public class App {
             String velhaColuna = DeuVelhaColuna();
             String velhaLinha = DeuVelhaLinha();
             String velhaDiag = DeuVelhaDiagonal();
-            if (velhaColuna == null && velhaLinha == null && velhaDiag == null) 
+            String velhaDiag2 = DeuVelhaDiagonal2();
+            if (velhaColuna == null && velhaLinha == null && velhaDiag == null && velhaDiag2 == null) 
             {
                 Random random = new Random();
                 int linha = random.nextInt(1, 4);
@@ -132,20 +134,20 @@ public class App {
                 if (posicaoOcupada == false)
                 {
                     MudaTabuleiro(linha, coluna, 'O');
-                    if (DeuVelhaColuna() == null & DeuVelhaLinha() == null & DeuVelhaDiagonal() == null)
+                    if (DeuVelhaColuna() == null & DeuVelhaLinha() == null & DeuVelhaDiagonal() == null &        DeuVelhaDiagonal2() == null)
                         JogadaUsuario(linha, coluna);
                     else 
-                        MensagemUsuario(DeuVelhaColuna(), DeuVelhaLinha(), DeuVelhaDiagonal());
+                        MensagemUsuario(DeuVelhaColuna(), DeuVelhaLinha(), DeuVelhaDiagonal(), DeuVelhaDiagonal2());
                 }
             }
             else
-                MensagemUsuario(velhaColuna, velhaLinha, velhaDiag);
+                MensagemUsuario(velhaColuna, velhaLinha, velhaDiag, velhaDiag2);
         }
         else 
             System.out.println("\nDEU VELHA!");   
     }
 
-    public static void MensagemUsuario(String velhaColuna, String velhaLinha, String velhaDiagonal)
+    public static void MensagemUsuario(String velhaColuna, String velhaLinha, String velhaDiagonal, String velhaDiagonal2)
     {
         if (velhaColuna != null)
             PrintMensagem(velhaColuna);
@@ -154,7 +156,10 @@ public class App {
             PrintMensagem(velhaLinha);
         
         if (velhaDiagonal != null)
-            PrintMensagem(velhaDiagonal);  
+            PrintMensagem(velhaDiagonal); 
+            
+        if (velhaDiagonal2 != null)
+            PrintMensagem(velhaDiagonal2);  
     }
 
     public static void PrintMensagem(String resultado)
@@ -190,17 +195,20 @@ public class App {
     public static void Espacamento(StringBuilder sb, int coluna, int linha, char figura)
     {
         int index = 0;
-        if (coluna == 1){
+        if (coluna == 1)
+        {
             index = 6;
             sb.setCharAt(index, figura);
         }
             
-        else if (coluna == 2){
+        else if (coluna == 2)
+        {
             index = 16;
             sb.setCharAt(index, figura);
         }
         
-        else if (coluna == 3){
+        else if (coluna == 3)
+        {
             index = 26;
             sb.setCharAt(index, figura);
         }
@@ -283,7 +291,32 @@ public class App {
     
         if (figuraO.size() == 3)
                 return "O";
+        
+        return null;
+    }
 
+    public static String DeuVelhaDiagonal2()
+    {
+        List<Character> figuraX = new ArrayList<>();
+        List<Character> figuraO = new ArrayList<>();
+        int posicao = 26;
+        for (int linha = 0; linha < 3; linha++)
+        {
+            String linhaTabuleiro = Tabuleiro.get(linha);
+            char figura = linhaTabuleiro.charAt(posicao);
+            if (figura == 'X')
+                figuraX.add(figura);
+
+            else if (figura == 'O')
+                figuraO.add(figura);
+
+            posicao -= 10;
+        }
+        if (figuraX.size() == 3)
+                return "X";            
+    
+        if (figuraO.size() == 3)
+                return "O";
         return null;
     }
 }
