@@ -20,19 +20,21 @@ public class App {
 
     public static void PosicoesTabuleiro(){
         
-        for (int linha = 1; linha < 4; linha++) {
-            for (int coluna = 1; coluna < 4; coluna++) {
+        for (int linha = 1; linha < 4; linha++) 
+        {
+            for (int coluna = 1; coluna < 4; coluna++) 
+            {
                 List<Integer> posicoesDesocupadas = Arrays.asList(linha, coluna);
                 PosicoesDesocupadas.add(posicoesDesocupadas);
             }
         }
     }
 
-    public static void IniciaJogo(){
+    public static void IniciaJogo()
+    {
         System.out.println("\nUsuário: X\nRobô: O\n");
-        for (int linha = 0; linha < 3; linha++) {
+        for (int linha = 0; linha < 3; linha++) 
             System.out.println(Tabuleiro.get(linha).toString());
-        }
     }
 
     public static void JogadaUsuario(int linha, int coluna)
@@ -40,15 +42,16 @@ public class App {
         Scanner input = new Scanner(System.in);
         String velhaColuna = DeuVelhaColuna();
         String velhaLinha = DeuVelhaLinha();
+        String velhaDiag = DeuVelhaDiagonal();
 
-        if (velhaColuna != null | velhaLinha != null)
+        if (velhaColuna != null | velhaLinha != null | velhaDiag != null)
             MensagemUsuario(velhaColuna, velhaLinha);
             
         else
         {
             if (TabuleiroCheio() == false)
             {
-                System.out.print("\n~~~~~~~ JOGADA DO USUÁRIO ~~~~~~~~\n ");
+                System.out.print("\n~~~~~~~ JOGADA DO USUÁRIO ~~~~~~~~\n");
                 System.out.print("\nInsira a linha que deseja jogar (1 à 3): ");
                 int line = input.nextInt();
                 if (line > 3 || line < 1)
@@ -56,7 +59,7 @@ public class App {
                     System.out.println("A linha deve ser um valor de 1 à 3.");
                     JogadaUsuario(linha, coluna);
                 }
-                System.out.print("Insira a coluna que deseja jogar (1 à 3): ");
+                System.out.print("\nInsira a coluna que deseja jogar (1 à 3): ");
                 int column = input.nextInt();
                 if (column > 3 || column < 1)
                 {
@@ -68,9 +71,9 @@ public class App {
                 boolean posicaoOcupada = PosicaoOcupada(posicoes);
         
                 if (posicaoOcupada == false){
-                    System.out.print("Marcando X na posição: (" + line + ", " + column + "):\n" );
+                    System.out.print("\nMarcando X na posição: (" + line + ", " + column + "):\n" );
                     MudaTabuleiro(line, column, 'X');
-                    if (DeuVelhaColuna() == null & DeuVelhaLinha() == null)
+                    if (DeuVelhaColuna() == null & DeuVelhaLinha() == null & DeuVelhaDiagonal() == null)
                     {
                         System.out.print("\n~~~~~~~ JOGADA DO ROBÔ ~~~~~~~~\n");
                         JogadaRobo();
@@ -93,12 +96,14 @@ public class App {
 
      public static void MudaTabuleiro(int line, int column, char figura){
         System.out.print("\n");
-        for (int linha = 1; linha < 4; linha++) {
+        for (int linha = 1; linha < 4; linha++) 
+        {
             String tabuleiro =  Tabuleiro.get(linha-1);
             StringBuilder sb = new StringBuilder(tabuleiro);
             if (linha != line)
                 System.out.println(tabuleiro);
-            for (int coluna = 1; coluna < 4; coluna++) {
+            for (int coluna = 1; coluna < 4; coluna++) 
+            {
                 if (linha == line && coluna == column) 
                 {
                     Espacamento(sb, coluna, linha, figura);
@@ -114,48 +119,48 @@ public class App {
         {
             String velhaColuna = DeuVelhaColuna();
             String velhaLinha = DeuVelhaLinha();
-            if (velhaColuna == null && velhaLinha == null) 
+            String velhaDiag = DeuVelhaDiagonal();
+            if (velhaColuna == null && velhaLinha == null && velhaDiag == null) 
             {
-
-                    Random random = new Random();
-                    int linha = random.nextInt(1, 4);
-                    int coluna = random.nextInt(1, 4);
-                    List<Integer> jogadas = Arrays.asList(linha, coluna);
-                    boolean posicaoOcupada = PosicaoOcupada(jogadas);
-                    if (posicaoOcupada == true)
-                        JogadaRobo();
-                    else
-                    {
-                        MudaTabuleiro(linha, coluna, 'O');
-                        JogadaUsuario(linha, coluna);
-                    }
+                Random random = new Random();
+                int linha = random.nextInt(1, 4);
+                int coluna = random.nextInt(1, 4);
+                List<Integer> jogadas = Arrays.asList(linha, coluna);
+                boolean posicaoOcupada = PosicaoOcupada(jogadas);
+                if (posicaoOcupada == true)
+                    JogadaRobo();
+                else
+                {
+                    MudaTabuleiro(linha, coluna, 'O');
+                    JogadaUsuario(linha, coluna);
+                }
             }
             else
-                MensagemUsuario(velhaColuna, velhaLinha);
+                MensagemUsuario(velhaColuna, velhaLinha, velhaDiag);
         }
         else 
             System.out.println("\nDEU VELHA!");   
-        
     }
 
-    public static void MensagemUsuario(String velhaColuna, String velhaLinha)
+    public static void MensagemUsuario(String velhaColuna, String velhaLinha, String velhaDiagonal)
     {
         if (velhaColuna != null)
-        {
-            if (velhaColuna.equals("X"))
-                System.out.println("\nVOCÊ VENCEU!");
-
-            else if (velhaColuna.equals("O"))
-                System.out.println("\nO ROBÔ VENCEU!");
-        }
+            PrintMensagem(velhaColuna);
+        
         if (velhaLinha != null)
-        {
-            if (velhaLinha.equals("X"))
+            PrintMensagem(velhaLinha);
+        
+        if (velhaDiagonal != null)
+            PrintMensagem(velhaDiagonal);  
+    }
+
+    public static void PrintMensagem(String resultado)
+    {
+        if (resultado.equals("X"))
             System.out.println("\nVOCÊ VENCEU!");
 
-            else if (velhaLinha.equals("O"))
+        else if (resultado.equals("O"))
             System.out.println("\nO ROBÔ VENCEU!");
-        }
     }
 
     public static boolean PosicaoOcupada(List<Integer> posicoes)
@@ -250,6 +255,32 @@ public class App {
 
             figuraX.clear(); figuraO.clear();
         }
+        return null;
+    }
+
+    public static String DeuVelhaDiagonal()
+    {
+        List<Character> figuraX = new ArrayList<>();
+        List<Character> figuraO = new ArrayList<>();
+        int posicao = 6;
+        for (int linha = 0; linha < 3; linha++)
+        {
+            String linhaTabuleiro = Tabuleiro.get(linha);
+            char figura = linhaTabuleiro.charAt(posicao);
+            if (figura == 'X')
+                figuraX.add(figura);
+
+            else if (figura == 'O')
+                figuraO.add(figura);
+
+            posicao += 10;
+        }
+        if (figuraX.size() == 3)
+                return "X";            
+    
+        if (figuraO.size() == 3)
+                return "O";
+
         return null;
     }
 }
