@@ -45,7 +45,7 @@ public class App {
         String velhaDiag = DeuVelhaDiagonal();
 
         if (velhaColuna != null | velhaLinha != null | velhaDiag != null)
-            MensagemUsuario(velhaColuna, velhaLinha);
+            MensagemUsuario(velhaColuna, velhaLinha, velhaDiag);
             
         else
         {
@@ -79,7 +79,7 @@ public class App {
                         JogadaRobo();
                     }
                     else 
-                        MensagemUsuario(DeuVelhaColuna(), DeuVelhaLinha());
+                        MensagemUsuario(DeuVelhaColuna(), DeuVelhaLinha(), DeuVelhaDiagonal());
                 }
                 else
                 {
@@ -129,10 +129,13 @@ public class App {
                 boolean posicaoOcupada = PosicaoOcupada(jogadas);
                 if (posicaoOcupada == true)
                     JogadaRobo();
-                else
+                if (posicaoOcupada == false)
                 {
                     MudaTabuleiro(linha, coluna, 'O');
-                    JogadaUsuario(linha, coluna);
+                    if (DeuVelhaColuna() == null & DeuVelhaLinha() == null & DeuVelhaDiagonal() == null)
+                        JogadaUsuario(linha, coluna);
+                    else 
+                        MensagemUsuario(DeuVelhaColuna(), DeuVelhaLinha(), DeuVelhaDiagonal());
                 }
             }
             else
