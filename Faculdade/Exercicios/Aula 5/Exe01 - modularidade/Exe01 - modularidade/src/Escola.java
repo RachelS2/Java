@@ -8,17 +8,60 @@ public class Escola {
         Professor profElaine = new Professor("Elaine", 3);
 
         List<Disciplina> disciplinas = Arrays.asList
-                                    (new Disciplina("Programação Orientada a Objetos", profLuiz, 10), 
-                                    new Disciplina("Ética e Informação", profChris, 9), 
-                                    new Disciplina("Inteligência de Negócios", profElaine, 8));
+                            (new Disciplina("Programação Orientada a Objetos", profLuiz, 10, 10), 
+                            new Disciplina("Ética e Informação", profChris, 9, 8), 
+                            new Disciplina("Inteligência de Negócios", profElaine, 8, 7));
         
         List<Aluno> notaAluna = Arrays.asList
-                                (new Aluno("Rachel", disciplinas.get(0)), 
-                                new Aluno("Rachel", disciplinas.get(1)), 
-                                new Aluno("Rachel", disciplinas.get(2)));
+                            (new Aluno("Rachel", disciplinas.get(0)), 
+                            new Aluno("Rachel", disciplinas.get(1)), 
+                            new Aluno("Rachel", disciplinas.get(2)));
 
-        ExibeHistorico(notaAluna);
-        ExibeCR(notaAluna);
+        Menu(notaAluna);
+    }
+
+    public static void Menu(List<Aluno> notaAluno)
+    {
+        System.out.println("~~~~~~~~~~~ MENU ~~~~~~~~~~~");
+        System.out.println("\nPara exibir histórico do aluno: \n-> Pressione a tecla 1");
+        System.out.println("\nPara exibir o CR do aluno: \n-> Pressione a tecla 2");
+        System.out.println("\nPara exibir a média do aluno em uma disciplina: \n-> Pressione a tecla 3");
+        System.out.println("\nPara exibir a ementa da disciplina:\n-> Pressione a tecla 4");
+        Scanner input = new Scanner(System.in);
+        int opcao = input.nextInt();
+        switch (opcao) {
+            case 1:
+                ExibeHistorico(notaAluno);
+                break;
+            case 2:
+                ExibeCR(notaAluno);
+                break;
+            case 3: 
+                ImprimeMedia(notaAluno, input);
+                break;
+                
+        }
+    }
+
+    public static void ImprimeMedia(List<Aluno> notaAluno, Scanner input){
+        System.out.print("-> Nome da disciplina: ");
+        String nomeDisciplina = input.next().toLowerCase().replace('é', 'e').replace('á', 'a').replace('ê', 'e').replace('ó', 'o').replace('ã', 'a').replace('ç', 'c');
+        boolean verificacao = false;
+        for (Aluno aluno : notaAluno)
+        {
+            String disciplina = aluno.Disciplina.NomeDisciplina;
+            if (disciplina.equalsIgnoreCase(nomeDisciplina))
+            {
+                System.out.println("-> Média do aluno: " + aluno.Disciplina.RetornaMedia());
+                verificacao = true;
+            }
+        }
+        if (verificacao == false)
+        {
+            System.out.println("-> Disciplina inválida! Tente novamente.");
+            ImprimeMedia(notaAluno, input);
+        }
+        Menu(notaAluno);
     }
 
     public static void ExibeHistorico(List<Aluno> notaAluno)
@@ -27,12 +70,14 @@ public class Escola {
         System.out.println("Estudante: " + notaAluno.get(0).pegaNome() + "\n");
         for (Aluno aluno : notaAluno)
             aluno.ExibeHistorico(aluno);
+        Menu(notaAluno);
     }
 
     public static void ExibeCR(List<Aluno> notaAluno)
     {
         Aluno aluno = notaAluno.get(0);
         aluno.ExibeCR(notaAluno);
+        Menu(notaAluno);
     }
 }
 
@@ -49,17 +94,18 @@ class Disciplina
 {
     String NomeDisciplina; 
     Professor Professor;
-    Double Nota;
-    Disciplina(String nomeDisciplina, Professor professor, double nota){
+    Double Nota1;
+    Double Nota2;
+    Disciplina(String nomeDisciplina, Professor professor, double nota1, double nota2){
         NomeDisciplina = nomeDisciplina;
         Professor = professor;
-        Nota = nota;
+        Nota1 = nota1;
+        Nota2 = nota2;
     }  
-    public double pegaNota(){
-        return Nota;
+    public double RetornaMedia(){
+        return (Nota1 + Nota2) / 2;
     }
 
-    
 }
 
 class Aluno {
@@ -77,7 +123,7 @@ class Aluno {
     public void ExibeHistorico(Aluno aluno){
         
         System.out.println("Disciplina: " + aluno.Disciplina.NomeDisciplina);
-        System.out.println("Nota: " + aluno.Disciplina.Nota);
+        System.out.println("Média: " + aluno.Disciplina.RetornaMedia());
         System.out.println(" ");
     }
 
@@ -88,7 +134,7 @@ class Aluno {
         for (int i = 0; i < notaAluno.size(); i++){
             Aluno aluna = notaAluno.get(i);
             Disciplina disciplina = aluna.Disciplina;
-            soma += disciplina.Nota; 
+            soma += disciplina.RetornaMedia(); 
         }
         System.out.println("Coeficiente de Rendimento: " + soma/3 + "\n");
     }
