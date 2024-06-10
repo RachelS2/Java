@@ -74,7 +74,7 @@ public class App {
                 if (posicaoOcupada == false){
                     System.out.print("\nMarcando X na posição: (" + line + ", " + column + "):\n" );
                     MudaTabuleiro(line, column, 'X');
-                    if (DeuVelhaColuna() == null & DeuVelhaLinha() == null & DeuVelhaDiagonal() == null & DeuVelhaDiagonal2() == null)
+                    if ((TabuleiroCheio() == false) & DeuVelhaColuna() == null & DeuVelhaLinha() == null & DeuVelhaDiagonal() == null & DeuVelhaDiagonal2() == null)
                     {
                         System.out.print("\n~~~~~~~ JOGADA DO ROBÔ ~~~~~~~~\n");
                         JogadaRobo();
