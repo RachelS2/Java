@@ -1,0 +1,1 @@
+Usuário(a) entra com o tempo em segundos e esse tempo em horas:minutos:segundos será impresso na tela.
