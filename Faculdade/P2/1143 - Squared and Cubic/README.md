@@ -1,3 +1,5 @@
+![image](https://github.com/RachelS2/Java/assets/159156366/094d8725-909c-470b-ac12-dbd2d6022255)
+
 Write a program that reads an integer N (1 < N < 1000). This N is the number of output lines printed by this program.
 
 Input
@@ -12,4 +14,3 @@ Input Sample	Output Sample
                 3 9 27
                 4 16 64
                 5 25 125
-
