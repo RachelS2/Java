@@ -1,1 +1,11 @@
-Usuário(a) entra com o tempo em segundos e esse tempo em horas:minutos:segundos será impresso na tela.
+Read an integer value, which is the duration in seconds of a certain event in a factory, and inform it expressed in hours:minutes:seconds.
+
+Input
+The input file contains an integer N.
+
+Output
+Print the read time in the input file (seconds) converted in hours:minutes:seconds like the following example.
+
+Input Sample	Output Sample
+556             0:9:16
+
