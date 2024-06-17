@@ -11,6 +11,7 @@ public class App {
         
         int top = agora.AchaMaximo(k);
         System.out.println("Top " + top);
+        input.close();
     }
 }
 
